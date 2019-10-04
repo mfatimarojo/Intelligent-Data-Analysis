@@ -1,0 +1,292 @@
+setwd("C:/hlocal/R/Lab#1a")
+library("dplyr", lib.loc="~/R/win-library/3.4")
+library("ggplot2", lib.loc="~/R/win-library/3.4")
+library("plyr", lib.loc="~/R/win-library/3.4")
+library("moments", lib.loc="~/R/win-library/3.4")
+library("car", lib.loc="~/R/win-library/3.4")
+cereals <- read.table("cerealdata.txt", header=TRUE, as.is=TRUE, na.strings="-1")
+View(cereals)
+names(cereals) <- c('name','mfr','type','calories','protein','fat','sodium','fiber','carbo',
+'sugars','shelf','potass','vitamins','weight','cups', 'rating')
+cereals <- read.table("cerealdata.txt", header=TRUE, as.is=TRUE, na.strings="-1")
+names(cereals) <- c('name','mfr','type','calories','protein','fat','sodium','fiber','carbo',
+'sugars','shelf','potass','vitamins','weight','cups', 'rating')
+View(cereals)
+View(cereals)
+url="http://lib.stat.cmu.edu/datasets/1993.expo/cereal"
+sum(is.na(cereals))
+cereals=na.omit(cereals)
+str(cereals)
+cereals$shelf <- factor(cereals$shelf, levels=1:3, ordered=TRUE)
+cereals$shelf
+table(cereals$shelf)
+cereals$shelfC <- recode(cereals$shelf, " 1='low'; 2='medium'; 3='high' ")
+cereals$shelfC
+table(cereals&shelfC)
+table(cereals$shelfC)
+summary(cereals)
+apply(cereals[,7:10],2, kurtosis)
+cv=function(x){
+sd=sqrt(var(x))
+mu=abs(mean(x))
+sd/mu}
+apply(cereals[,7:10],2, cv)
+cereal_stats=data.frame(
+cv=apply(cereals[,c(4:10,12:16)],2,cv),
+kurtosis=apply(cereals[,c(4:10,12:16)],2,kurtosis),
+skew=apply(cereals[,c(4:10,12:16)],2,skewness))
+View(cv)
+cereal_stats=data.frame(
+cv=apply(cereals[,c(4:10,12:16)],2,cv),
+kurtosis=apply(cereals[,c(4:10,12:16)],2,kurtosis),
+skew=apply(cereals[,c(4:10,12:16)],2,skewness))
+apply(cereals[,c(4:10,12:16)],2,cv)
+apply(cereals[,7:10],2, cv)
+apply(cereals[,c(4:10,12:16)],2,cv)
+warnings()
+cereal_stats=data.frame(
+cv=apply(cereals[,7:10],2,cv),
+kurtosis=apply(cereals[,7:10],2,kurtosis),
+skew=apply(cereals[,7:10],2,skewness))
+print(cereal_stats, gap=3)
+glimpse(cereals)
+filter1=filter(cereals, shelf==3)
+head(filter1)
+filter2=filter(cereals,shelf==3,sodium > 100, sodium <=130)
+head(filter2)
+head(arrange(cereals,sugars))
+head(arrange(cereals,sugars, protein))
+head(select(cereals, shelf, sugars))
+head(select(cereals, starts_with("p")))
+mutate(cereals, logC=log(calories) )
+group_by(cereals,mfr)
+group_by(cereals,mfr), mean(sugars), sd(sugars))
+sample_n(cereals, 10)
+sample_frac(cereals, 0.1)
+cereals %>% group_by(mfr) %>% summarise(N=n(),avg=mean(sugars), s=sd(sugars)) %>%arrange(avg)
+cereals %>% group_by(shelf) %>% summarise(N=n(),avg=mean(sugars), s=sd(sugars)) %>%arrange(avg)
+cereals %>% group_by(mfr, shelf) %>% summarise(N=n(),avg=mean(sugars), s=sd(sugars))
+df1=cereals %>% group_by(shelf) %>% summarise(N=n(),avg=mean(sugars), s=sd(sugars),se=s/sqrt(N),cil=avg-qt(0.975,N-1)*se,ciu=avg+qt(0.975,N-1)*se)
+plot(cereals$fiber, cereals$calories)
+plot(cereals$fat, cereals$calories)
+jitter(cereals$fat)
+plot(jitter(cereals$fat), jitter(cereals$calories))
+plot(cereals$fat, cereals$calories)
+plot(jitter(cereals$fat), jitter(cereals$calories))
+install(vcd)
+install("vcd)
+install("vcd)<
+install("vcd")
+install.packages("vcd")
+install.packages("vcdExtra")
+setwd("C:/hlocal/R/Lab#1c")
+setwd("C:/hlocal/R/Lab#1c")
+accidents <- read.csv('road-accidents-2010.csv', header=TRUE,as.is=TRUE, na.strings="-1")
+library("car", lib.loc="~/R/win-library/3.4")
+library("dplyr", lib.loc="~/R/win-library/3.4")
+library("ggplot2", lib.loc="~/R/win-library/3.4")
+library("mnormt", lib.loc="~/R/win-library/3.4")
+detach("package:mnormt", unload=TRUE)
+library("moments", lib.loc="~/R/win-library/3.4")
+library("plyr", lib.loc="~/R/win-library/3.4")
+library("vcd", lib.loc="~/R/win-library/3.4")
+library("vcdExtra", lib.loc="~/R/win-library/3.4")
+dim(accidents)
+accidents <- subset(accidents, accidents$Weather_Conditions %in% 1:6)
+help(subset)
+dim(accidents)
+View(accidents)
+View(accidents)
+accidents <- read.csv('road-accidents-2010.csv', header=TRUE,as.is=TRUE, na.strings="-1")
+dim(accidents)
+View(accidents)
+View(accidents)
+View(accidents)
+accidents$mydate <- as.Date(accidents$Date, format="%d/%m/%Y")
+accidents$Fatality <- accidents$Accident_Severity == 1
+sum(! (accidents$Weather_Conditions %in% 1:6))
+sum(! (accidents$Weather_Conditions %in% 1:6))/nrow(accidents)
+sum(! (accidents$Weather_Conditions %in% 1:6))/nrow(accidents)
+accidents <- subset(accidents, accidents$Weather_Conditions %in% 1:6)
+dim(accidents)
+newframe=accidents %>% group_by(mydate)%>% summarise(N=n(), meanW=mean(Weather_Conditions), p.fatal=mean(Fatality))
+library("dplyr", lib.loc="~/R/win-library/3.4")
+library("plyr", lib.loc="~/R/win-library/3.4")
+library("car", lib.loc="~/R/win-library/3.4")
+library("moments", lib.loc="~/R/win-library/3.4")
+library("ggplot2", lib.loc="~/R/win-library/3.4")
+newframe=accidents %>% group_by(mydate)%>% summarise(N=n(), meanW=mean(Weather_Conditions), p.fatal=mean(Fatality))
+library("dplyr", lib.loc="~/R/win-library/3.4")
+newframe=accidents %>% group_by(mydate)%>% summarise(N=n(), meanW=mean(Weather_Conditions), p.fatal=mean(Fatality))
+library("dplyr", lib.loc="~/R/win-library/3.4")
+newframe=accidents %>% group_by(mydate)%>% summarise(N=n(), meanW=mean(Weather_Conditions), p.fatal=mean(Fatality))
+install.packages("tinyverse")
+install.packages("tidyverse")
+library("dplyr", lib.loc="~/R/win-library/3.4")
+newframe=accidents %>% group_by(mydate)%>% summarise(N=n(), meanW=mean(Weather_Conditions), p.fatal=mean(Fatality))
+newframe=accidents %>% group_by(mydate)%>% LRstats(N=n(), meanW=mean(Weather_Conditions), p.fatal=mean(Fatality))
+library("plyr", lib.loc="~/R/win-library/3.4")
+detach("package:dplyr", unload=TRUE)
+install.packages("plyr")
+install.packages("dplyr")
+library("plyr", lib.loc="~/R/win-library/3.4")
+library("dplyr", lib.loc="~/R/win-library/3.4")
+newframe=accidents %>% group_by(mydate)%>% summarise(N=n(), meanW=mean(Weather_Conditions), p.fatal=mean(Fatality))
+names(newframe)[1]="Date"
+newframe$Day=format(newframe$Date, "%w")
+View(accidents)
+View(accidents)
+newframe=accidents %>% group_by(mydate)%>% summarise(N=n(), meanW=mean(Weather_Conditions), p.fatal=mean(Fatality))
+names(newframe)[1]="Date"
+newframe$Day=format(newframe$Date, "%w")
+plot1=ggplot(data=newframe, aes(x=Day, y=N))
+library("ggplot2", lib.loc="~/R/win-library/3.4")
+plot1=ggplot(data=newframe, aes(x=Day, y=N))
+newframe
+plot1+geom_boxplot()
+plot1+geom_jitter(aes(size=p.fatal, color=meanW), position=position_jitter(w=.3, h=.0))
+plot1=ggplot(data=newframe, aes(x=Day, y=N))
+plot1+geom_boxplot()
+plot1+geom_jitter(aes(size=p.fatal, color=meanW), position=position_jitter(w=.3, h=.0))
+plot1+geom_boxplot()+geom_jitter(aes(size=p.fatal, color=meanW), position=position_jitter(w=.3, h=.0))+ggtitle("Number of accident by day of the week")+
+xlab("Day of the week. 0 is Sunday") +
+ylab("Number of accidents in a day")
+plot1+geom_boxplot()
+plot1+geom_jitter(aes(size=p.fatal, color=meanW), position=position_jitter(w=.3, h=.0))
+plot1+geom_boxplot()+geom_jitter(aes(size=p.fatal, color=meanW), position=position_jitter(w=.3, h=.0))+ggtitle("Number of accident by day of the week")+
+xlab("Day of the week. 0 is Sunday") +
+ylab("Number of accidents in a day")
+plot2 <- ggplot(data=newframe, aes(x=meanW, y=p.fatal))
+plot2 <-plot2 +
+geom_point(aes(size=Day, color=N))+
+geom_smooth(color="black")+
+ggtitle("Proporton of fatalities by mean weather condition")+
+xlab("Mean Weather Severity") +
+ylab("Proportion of accidents with at least one fatality")
+plot2
+newframe$DayF=newframe$Day
+newframe$DayF=gsub(5, "W", newframe$DayF)
+newframe$DayF=gsub(4, "W", newframe$DayF)
+newframe$DayF=gsub(3, "W", newframe$DayF)
+newframe$DayF=gsub(2, "W", newframe$DayF)
+newframe$DayF=gsub(6, "W", newframe$DayF)
+newframe$DayF=gsub(0, "WE", newframe$DayF)
+newframe$DayF=gsub(1, "WE", newframe$DayF)
+plot2.1 <- ggplot(data=newframe, aes(x=meanW, y=p.fatal))
+plot2.1 <-plot2.1 +
+geom_point(aes(shape=DayF, color=N), size=2.5)+
+geom_smooth(color="black")+
+ggtitle("Proporton of fatalities by mean weather condition")+
+xlab("Mean Weather Severity") +
+ylab("Proportion of accidents with at least one fatality")
+plot2.1
+plot2.2 <- ggplot(data=newframe, aes(x=meanW, y=p.fatal, group=DayF) )
+plot2.2 <-plot2.2 +
+geom_point(aes(colour=DayF))+
+geom_smooth(aes(colour=DayF))+
+ggtitle("Proporton of fatalities by mean weather condition")+
+xlab("Mean Weather Severity") +
+ylab("Proportion of accidents with at least one fatality")
+plot2.2
+plot3<- ggplot(data=newframe, aes(x=Date, y=N))+
+ggtitle("Number of accidents with injury in 2010")+
+xlab("Date")+ylab("Number of accidents")+
+geom_point()+
+geom_smooth()
+plot3
+newframe$month <- as.numeric(format(newframe$Date, "%m"))
+newframe2=newframe %>% group_by(month)%>% summarise(Mu=mean(N), s=sd(N), se=s/sqrt(n()),lcp= Mu-
+qt(0.975,n()-1)*se,ucp= Mu+
+qt(0.975,n()-1)*se)
+newframe2
+ggplot(newframe2,aes(x=month, y=Mu))+geom_line()+geom_ribbon(aes(ymin=lcp,ymax=ucp), fill="grey70", alpha=0.7)+geom_line(aes(y=Mu))+scale_x_continuous(breaks=c(1:12))
+# or
+plot4 <- ggplot(data=newframe2, aes(x=month, y=Mu))+
+ggtitle("Number of accidents by month")+
+xlab("Month")+ylab("Mean number of accidents by month with 95% ci")+
+geom_point()+
+geom_errorbar(aes(ymin=lcp, ymax=ucp), width=0.2)+
+geom_line(aes(group=1))+
+scale_x_continuous(breaks=c(1:12))
+plot4
+accidents$DateTime <- as.POSIXlt(paste(accidents$Date," ",accidents$Time), format="%d/%m/%Y %H:%M", tz="GMT")
+accidents$DateTime[1:10]
+accidents$Hour <- as.numeric(format(accidents$DateTime, "%H"))
+ggplot(data=accidents, aes(x=Hour))+
+ggtitle("Histogram of accidents with injury by hour of the day")+
+ylab("Number of accidents")+xlab("Hour of the day")+
+geom_histogram( binwidth=1, alpha=0.2)
+ggplot(data=accidents, aes(x=Hour,y=..density..))+
+ggtitle("Histogram of accidents with injury by hour of the day")+
+ylab("Relative Freq. of accidents")+xlab("Hour of the day")+
+geom_histogram( binwidth=1, alpha=0.2)
+sum(is.na(accidents$Hour))
+newframe4=table(accidents$Hour, accidents$Fatality)
+newframe4
+newframe5=xtabs(~Hour+Fatality,data=accidents)
+addmargins(newframe5)
+prop.table(newframe5,1)
+newframe5=xtabs(~Hour+Fatality,data=accidents)
+newframe5
+addmargins(newframe5)
+prop.table(newframe5,1)
+chisq.test(newframe5)
+chi1=chisq.test(newframe5, simulate.p.value=TRUE)
+chi1$residuals
+chi1=chisq.test(newframe5, simulate.p.value=TRUE)
+chi1
+chi1$residuals
+chi1$expected
+chi1$obs
+mosaic(newframe5, shade=TRUE)
+plot(prop.table(newframe5,1)[,2], type="l", xlab="", ylab="")
+library("vcd", lib.loc="~/R/win-library/3.4")
+library("vcdExtra", lib.loc="~/R/win-library/3.4")
+mosaic(newframe5, shade=TRUE)
+plot(prop.table(newframe5,1)[,2], type="l", xlab="", ylab="")
+newframe6=accidents[,c(34,36)]
+newframe7=newframe6 %>% group_by(Hour) %>% summarise(n=sum(Fatality), N=n(), p=n/N, cil=p-1.96*sqrt((p*(1-p)/N)), ciu=p+1.96*sqrt((p*(1-p)/N)) )
+library("plyr", lib.loc="~/R/win-library/3.4")
+library("dplyr", lib.loc="~/R/win-library/3.4")
+newframe7=newframe6 %>% group_by(Hour) %>% summarise(n=sum(Fatality), N=n(), p=n/N, cil=p-1.96*sqrt((p*(1-p)/N)), ciu=p+1.96*sqrt((p*(1-p)/N)) )
+plot6 <- ggplot(data=newframe7, aes(x=Hour, y=p))+
+ggtitle("Probability of a fatality by hour of the day")+
+xlab("Hour of the day")+ylab("Probability of a fatality and 95% ci")+
+geom_point()+
+geom_line()+
+geom_errorbar(aes(ymin=cil, ymax=ciu), width=0.2)
+install.packages("dplyr")
+library("plyr", lib.loc="~/R/win-library/3.4")
+library("dplyr", lib.loc="~/R/win-library/3.4")
+newframe7=newframe6 %>% group_by(Hour) %>% summarise(n=sum(Fatality), N=n(), p=n/N, cil=p-1.96*sqrt((p*(1-p)/N)), ciu=p+1.96*sqrt((p*(1-p)/N)) )
+plot6 <- ggplot(data=newframe7, aes(x=Hour, y=p))+
+ggtitle("Probability of a fatality by hour of the day")+
+xlab("Hour of the day")+ylab("Probability of a fatality and 95% ci")+
+geom_point()+
+geom_line()+
+geom_errorbar(aes(ymin=cil, ymax=ciu), width=0.2)
+library("ggplot2", lib.loc="~/R/win-library/3.4")
+plot6 <- ggplot(data=newframe7, aes(x=Hour, y=p))+
+ggtitle("Probability of a fatality by hour of the day")+
+xlab("Hour of the day")+ylab("Probability of a fatality and 95% ci")+
+geom_point()+
+geom_line()+
+geom_errorbar(aes(ymin=cil, ymax=ciu), width=0.2)
+plot6 <- ggplot(data=newframe7, aes(x=Hour, y=p))+
+ggtitle("Probability of a fatality by hour of the day")+
+xlab("Hour of the day")+ylab("Probability of a fatality and 95% ci")+
+geom_point()+
+geom_line()+
+geom_errorbar(aes(ymin=cil, ymax=ciu), width=0.2)
+plot6
+accidents$Month <-as.numeric(format(accidents$DateTime, "%m"))
+newframe9=xtabs(~Day_of_Week+Fatality, data=accidents)
+chisq.test(newframe9)
+accidents$DayF=car::recode(accidents$Day_of_Week, "c(2,3,4,5,6)='W'; c(7,1)='WE'")
+newframe9
+ggpot(newframe9)
+ggplot(newframe9)
+mosaic(newframe9, shade=TRUE)
+library("vcd", lib.loc="~/R/win-library/3.4")
+library("vcdExtra", lib.loc="~/R/win-library/3.4")
+mosaic(newframe5, shade=TRUE)
